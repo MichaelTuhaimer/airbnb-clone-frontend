@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const LandingPage = () => {
@@ -10,10 +10,12 @@ const LandingPage = () => {
     axios
       .get("http://localhost:3000/rooms.json")
       .then((response) => {
+        console.log(response);
         setRooms(response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((err) => {
+        console.log(err);
         setError("Error loading rooms");
         setLoading(false);
       });
@@ -28,14 +30,21 @@ const LandingPage = () => {
   }
 
   return (
-    <div>
-      <h1>Landing Page</h1>
-      <ul>
+    <>
+      <div>
+        <h1>Landing Page</h1>
+
         {rooms.map((room, index) => (
-          <li key={index}>{room.name}</li>
+          <ul key={index}>
+            <li>{room.room_type}</li>
+            <li>{room.home_type}</li>
+            <li>
+              {room.address} {room.city} {room.state}
+            </li>
+          </ul>
         ))}
-      </ul>
-    </div>
+      </div>
+    </>
   );
 };
 
