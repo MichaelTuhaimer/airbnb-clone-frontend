@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const LandingPage = () => {
   const [rooms, setRooms] = useState([]);
@@ -6,10 +7,10 @@ const LandingPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/rooms.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setRooms(data);
+    axios
+      .get("http://localhost:3000/rooms.json")
+      .then((response) => {
+        setRooms(response.data);
         setLoading(false);
       })
       .catch((error) => {
